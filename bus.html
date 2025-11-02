@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Resource Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #6B46C1;
+            --dark-purple: #553C9A;
+            --light-purple: #E9D8FD;
+            --white: #FFFFFF;
+            --gray: #F7FAFC;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--gray);
+            color: var(--text-dark);
+        }
+
+        /* Header */
+        header {
+            background: var(--purple);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(107, 70, 193, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-left: 50px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: var(--white);
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-list {
+            list-style: none;
+        }
+
+        .subject-item {
+            padding: 0.7rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            border-left: 3px solid transparent;
+        }
+
+        .subject-item:hover {
+            background: var(--light-purple);
+            border-left-color: var(--purple);
+            color: var(--dark-purple);
+        }
+
+        .subject-item.active {
+            background: var(--light-purple);
+            border-left-color: var(--purple);
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--dark-purple) 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(107, 70, 193, 0.3);
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .page-header p {
+            color: var(--light-purple);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .content-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--light-purple);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            color: var(--purple);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Resource Items */
+        .resource-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .resource-item {
+            background: var(--gray);
+            border-radius: 10px;
+            padding: 1.2rem;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resource-item:hover {
+            border-color: var(--purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 70, 193, 0.15);
+        }
+
+        .resource-info {
+            flex: 1;
+        }
+
+        .resource-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .resource-titles a{
+            background: transparent;
+            color: var(--black);
+        }
+
+        .resource-titles a:hover{
+            color: var(--purple);
+        }
+
+        .resource-meta {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .resource-link {
+            background: var(--purple);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .resource-link:hover {
+            background: var(--dark-purple);
+            transform: scale(1.05);
+        }
+
+        /* Video Grid */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .video-card {
+            background: var(--gray);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .video-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(107, 70, 193, 0.2);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, var(--light-purple) 0%, #D6BCFA 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .video-info {
+            padding: 1rem;
+        }
+
+        .video-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-duration {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.7rem;
+        }
+
+        .video-link {
+            display: inline-block;
+            background: var(--purple);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .video-link:hover {
+            background: var(--dark-purple);
+        }
+
+        /* Book Cards */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .book-card {
+            background: var(--gray);
+            border-radius: 10px;
+            padding: 1.3rem;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .book-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(107, 70, 193, 0.15);
+        }
+
+        .book-icon {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .book-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .book-author {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .book-link {
+            display: inline-block;
+            background: var(--purple);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .book-link:hover {
+            background: var(--dark-purple);
+        }
+
+        /* Syllabus Section */
+        .syllabus-box {
+            background: linear-gradient(135deg, var(--light-purple) 0%, #F3E8FF 100%);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 2px solid var(--purple);
+        }
+
+        .syllabus-box h3 {
+            color: var(--purple);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .syllabus-box ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .syllabus-box li {
+            padding: 0.5rem 0;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .syllabus-box li::before {
+            content: "▸";
+            color: var(--purple);
+            font-weight: bold;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--purple);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            background: var(--dark-purple);
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-purple);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            color: var(--light-purple);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--light-purple);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.6rem;
+                margin-left: 30px;
+                margin-top: 10px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                transition: left 0.3s;
+                z-index: 99;
+                max-height: calc(100vh - 60px);
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .main-content {
+                padding: 1rem;
+                margin-top: 0;
+            }
+
+            .page-header {
+                padding: 1.3rem;
+                margin-bottom: 1.2rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .page-header p {
+                font-size: 0.85rem;
+            }
+
+            .content-section {
+                padding: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .section-icon {
+                font-size: 1.2rem;
+            }
+
+            .resource-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .resource-link {
+                width: 100%;
+                text-align: center;
+                padding: 0.7rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .video-thumbnail {
+                height: 140px;
+            }
+
+            .book-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            header {
+                padding: 0.8rem 1rem;
+            }
+
+            footer {
+                padding: 1.5rem 1rem;
+            }
+
+            .footer-links {
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+                margin-left: 30px;
+                margin-top: 10px;
+            }
+
+            .page-header {
+                padding: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.2rem;
+            }
+
+            .page-header p {
+                font-size: 0.8rem;
+            }
+
+            .content-section {
+                padding: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1rem;
+            }
+
+            .section-icon {
+                font-size: 1.1rem;
+            }
+
+            .resource-item {
+                padding: 0.9rem;
+            }
+
+            .resource-title {
+                font-size: 0.9rem;
+            }
+
+            .resource-meta {
+                font-size: 0.75rem;
+            }
+
+            .resource-link {
+                font-size: 0.8rem;
+                padding: 0.6rem;
+            }
+
+            .video-thumbnail {
+                height: 120px;
+                font-size: 2rem;
+            }
+
+            .video-title {
+                font-size: 0.85rem;
+            }
+
+            .video-duration {
+                font-size: 0.75rem;
+            }
+
+            .video-link {
+                font-size: 0.8rem;
+                padding: 0.45rem 0.8rem;
+            }
+
+            .book-card {
+                padding: 1rem;
+            }
+
+            .book-title {
+                font-size: 0.9rem;
+            }
+
+            .book-author {
+                font-size: 0.8rem;
+            }
+
+            .book-link {
+                font-size: 0.8rem;
+            }
+
+            .syllabus-box {
+                padding: 1.2rem;
+            }
+
+            .syllabus-box h3 {
+                font-size: 1rem;
+            }
+
+            .syllabus-box li {
+                font-size: 0.85rem;
+            }
+
+            .download-btn {
+                font-size: 0.85rem;
+                padding: 0.7rem 1.2rem;
+            }
+
+            .subject-item {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .sidebar-title {
+                font-size: 0.75rem;
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">G-Academia</div>
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-title">Subjects</div>
+            <ul class="subject-list">
+                <li class="subject-item" onclick="loadSubject('home')">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: block;">📚 GPA Guide</a></li>
+                <li class="subject-item" onclick="loadSubject('cs')">
+                    <a href="announcements.html" style="text-decoration: none; color: inherit; display: block;">📢 Announcements</a></li>
+                <li class="subject-item" onclick="loadSubject('math')">
+                    <a href="math.html" style="text-decoration: none; color: inherit; display: block;">➗ Mathematics</a></li>
+                <li class="subject-item" onclick="loadSubject('english')">
+                    <a href="english.html" style="text-decoration: none; color: inherit; display: block;">📖 Functional English</a></li>
+                <li class="subject-item" onclick="loadSubject('econ')">
+                    <a href="economics.html" style="text-decoration: none; color: inherit; display: block;">💰 Microeconomics</a></li>
+                <li class="subject-item active" onclick="loadSubject('psych')">
+                    <a href="#" style="text-decoration: none; color: inherit; display: block;">📊 Business & Society</a></li>
+                <li class="subject-item" onclick="loadSubject('chemistry')">
+                    <a href="apd.html" style="text-decoration: none; color: inherit; display: block;">👩‍🎓 APD</a></li>
+                <li class="subject-item" onclick="loadSubject('cs')">
+                    <a href="computer.html" style="text-decoration: none; color: inherit; display: block;">💻 Applications of ICT</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>📊 Business & Society</h1>
+            </div>
+
+            <!-- Course Outline Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <span class="section-icon">📘</span>
+                    <h2>Course Outline / Syllabus</h2>
+                </div>
+                <div class="syllabus-box">
+                    <h3>Course Introduction. Course Outline</h3>
+                    <ul>
+                        <li>Concept of business and its link with society</li>
+                        <li>State and its institutions:  Senate, Parliament, Judiciary, Media</li>
+                        <li>Society, Culture & Subcultures</li>
+                        <li>The Nature of Business; Profit and Not for profit organizations</li>
+                        <li>Trust, Endowments, Foundations</li>
+                        <li>Understanding the Business Environment (Micro &Macro)</li>
+                        <li>Forms of Business Organizations</li>
+                        <li>Characteristics of Sole Proprietorship, Partnership and Corporation</li>
+                        <li>Advantages, Disadvantages and Scope of all Types of Business Ownerships</li>
+                        <li>Understanding Business Ethics</li>
+                        <li>How Organization Influence Ethical Conduct</li>
+                        <li>Managing a Socially Responsible Business</li>
+                        <li>Responsibility to Stakeholders</li>
+                        <li>Trends in Ethics and Corporate Social Responsibility</li>
+                    </ul>
+                    <a href="https://docs.google.com/document/d/1-ZNPmqFISz-DFC4RniYT1cal8o2zHfT8/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="download-btn">
+                        <span>📥</span>
+                        Download Course Outline (PDF)
+                    </a>
+                </div>
+            </div>
+
+            <!-- Lecture Notes Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <span class="section-icon">🗒</span>
+                    <h2>Lecture Notes</h2>
+                </div>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Week 1 Slides</div>
+                            <div class="resource-meta">Linked Videos 2 & 3</div>
+                        </div>
+                        <a href="https://docs.google.com/presentation/d/12k9AGrsvwNq92PwgIggDZrXxTzjTbqRq/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Week 2 Slides</div>
+                            <div class="resource-meta">Linked Videos 4, 5 & 6</div>
+                        </div>
+                        <a href="https://docs.google.com/presentation/d/1v_X4cB1jl0keTBcEIyUZ6fXZwsuApRyo/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Week 3 Slides</div>
+                            <div class="resource-meta">Article 4</div>
+                        </div>
+                        <a href="https://docs.google.com/presentation/d/1PNzNBsQZTU1F_KQZOGispqPzmzkvlJqR/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Week 4 Slides</div>
+                            <div class="resource-meta">Linked Video 7, Article 2</div>
+                        </div>
+                        <a href="https://docs.google.com/presentation/d/1jVRPd-3DM3gHufv0kvLO5_T6xBnmyFGQ/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">States & its Institutions</div>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1QX2rWkjb5Wwu3Y1_cJaOyQhjSZoJtuLA/view?usp=drivesdk" class="resource-link">📄 PDF</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Government of Pakistan</div>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1H_wscn19YJ0xkVnIGYyIlojCi2GDPU3k/view?usp=drivesdk" class="resource-link">📄 PDF</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Culture, Subculture & Media</div>
+                            <div class="resource-meta">No Links Attached</div>
+                        </div>
+                        <a href="https://docs.google.com/presentation/d/1D3Dgg8VLPx791Z6Nipi5aUEHoUT2nl4b/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Business Environment</div>
+                            <div class="resource-meta">Linked Video 1, Article 3 </div>
+                        </div>
+                        <a href="https://docs.google.com/document/d/1DHYlHMWOsZ-6PDM81kZTmsak970rZlsg/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Difference between Profit & Non-Profit Organizations</div>
+                            <div class="resource-meta">No Links Attached</div>
+                        </div>
+                        <a href="https://docs.google.com/presentation/d/1DKJF-Hc2i5_5LgDtmrALcRnBqqwhAoU8/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecture Videos Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <span class="section-icon">🎥</span>
+                    <h2>Reference Videos</h2>
+                </div>
+                <div class="video-grid">
+                    <div class="video-card">
+                        <div class="video-thumbnail">▶️</div>
+                        <div class="video-info">
+                            <div class="video-title">SWOT Analysis - What is SWOT?</div>
+                            <div class="video-duration">Duration: 6:27</div>
+                            <a href="https://www.youtube.com/watch?v=JXXHqM6RzZQ&t=14s" class="video-link">Watch Now</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">▶️</div>
+                        <div class="video-info">
+                            <div class="video-title">Elon Musk's Son X Æ Tells Donald Trump To 'Shush His Mouth'</div>
+                            <div class="video-duration">Week 1 Slides - Duration: 1:09</div>
+                            <a href="https://www.youtube.com/watch?v=UFDWsRRH1nw&ab_channel=Firstpost" class="video-link">Watch Now</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">▶️</div>
+                        <div class="video-info">
+                            <div class="video-title">Capitalism, Socialism and Communism Explained</div>
+                            <div class="video-duration">Week 1 Slides - Duration: 1:27</div>
+                            <a href="https://www.youtube.com/watch?v=JpVv49v8BLQ" class="video-link">Watch Now</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">▶️</div>
+                        <div class="video-info">
+                            <div class="video-title">The International Monetary Fund (IMF) and the World Bank Explained</div>
+                            <div class="video-duration">Week 2 Slides - Duration: 1:23</div>
+                            <a href="https://www.youtube.com/watch?v=WG72yk60tbA&ab_channel=OneMinuteEconomics" class="video-link">Watch Now</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">▶️</div>
+                        <div class="video-info">
+                            <div class="video-title">The United Nations Explained</div>
+                            <div class="video-duration">Week 2 Slides - Duration: 10:02</div>
+                            <a href="https://www.youtube.com/watch?v=I-F7VnSQcg0&ab_channel=TLDRNewsGlobal" class="video-link">Watch Now</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">▶️</div>
+                        <div class="video-info">
+                            <div class="video-title">What is the United Nations</div>
+                            <div class="video-duration">Week 2 Slides - Duration: 2:29</div>
+                            <a href="https://www.youtube.com/watch?v=E67ln5yJtyE&ab_channel=FN-sambandetNorge" class="video-link">Watch Now</a>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-thumbnail">▶️</div>
+                        <div class="video-info">
+                            <div class="video-title">MACKLEMORE - HIND'S HALL 2</div>
+                            <div class="video-duration">Week 4 Slides - Duration: 5:14</div>
+                            <a href="https://www.youtube.com/watch?v=bjtDsd0g468&rco=1&ab_channel=Macklemore" class="video-link">Watch Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reference Books Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <span class="section-icon">📚</span>
+                    <h2>Reference Books</h2>
+                </div>
+                <div class="book-grid">
+                    <div class="book-card">
+                        <div class="book-icon">📘</div>
+                        <div class="book-title">Business And Society</div>
+                        <div class="book-author">by Kean Birch</div>
+                        <a href="https://drive.google.com/file/d/1LFl-twdLtFDHig1dsm18ckum7m23O8MU/view?usp=drivesdk" class="book-link">Read Book</a>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-icon">📗</div>
+                        <div class="book-title">Culture & Media</div>
+                        <div class="book-author">Chp 8 & 15</div>
+                        <a href="https://drive.google.com/file/d/1UnsxTiHjzFe-TAntc193yJFBlR5HCFeW/view?usp=drivesdk" class="book-link">Read Book</a>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-icon">📙</div>
+                        <div class="book-title">Civics & Community Engagement</div>
+                        <div class="book-author">by Prof. Abdul Aziz Taga</div>
+                        <a href="https://drive.google.com/file/d/1HlI9IoLTD_-YvS-5DCO0KbJ6f0mTEJqp/view?usp=drivesdk" class="book-link">Read Book</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extra Resources Section -->
+            <div class="content-section">
+                <div class="section-header">
+                    <span class="section-icon">🧮</span>
+                    <h2>Articles</h2>
+                </div>
+                <div class="resource-list">
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Hagia Sophia stripped of Museum Status</div>
+                            <div class="resource-meta">The 1,500-year-old World Heritage monument has been the contested religious center of both Christian and Muslim empires—now the world is waiting to see what happens next.</div>
+                        </div>
+                        <a href="https://www.nationalgeographic.com/history/article/hagia-sophia-stripped-museum-status-paving-way-mosque" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Divest from Death</div>
+                            <div class="resource-meta">As we enter the eighth month of Israel’s genocidal campaign against Palestinians, the flow of weapons to Israel continues from the United States, Germany, Canada, Italy, Australia, and other Western countries. Read more..</div>
+                        </div>
+                        <a href="https://www.counterpunch.org/2024/06/02/divest-from-death/"class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Vertical integration and horizontal integration</div>
+                            <div class="resource-meta">Vertical integration and horizontal integration are business strategies that companies use to consolidate their position among competitors. Read more..</div>
+                        </div>
+                        <a href="https://www.mbacrystalball.com/blog/strategy/vertical-horizontal-integration-strategy/"class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Tesla’s dirty little secret</div>
+                            <div class="resource-meta">Tesla’s dirty little secret: Its net profit doesn’t come from selling cars. Read more..</div>
+                        </div>
+                        <a href="https://edition.cnn.com/2021/01/31/investing/tesla-profitability/index.html"class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Untapped Territory of Indignity & Guilt</div>
+                            <div class="resource-meta">Hagia Sophia stripped of UNESCO World Heritage status to AyaSofya mosque which for readers conscience was a nationalist concern based on the Foundation Charter of Fatih Sultan Mehmed II that stated governing the foundation other than as a mosque is interdicted.</div>
+                        </div>
+                        <a href="https://www.linkedin.com/pulse/morals-novelty-reema-amir/?trackingId=bMnqoOluTE2lr%2BgCOy4QDg%3D%3D" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Understanding the Business Environment (Micro & Macro)</div>
+                            <div class="resource-meta">Every business is affected by a myriad of factors. In other words, an organization as such can never exist and operate “in a vacuum”. It is a part of a larger entity known as the business environment. In broad terms, this environment can be divided into two categories.</div>
+                        </div>
+                        <a href="https://www.mageplaza.com/blog/micro-and-macro-factors-affect-your-business.html" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">New York's First Muslim Mayor</div>
+                            <div class="resource-meta">New York City is about to have its first Muslim and pro-Palestine mayor. Memdani: "I want to use this moment to speak to the Muslims of this city.</div>
+                        </div>
+                        <a href="https://www.linkedin.com/posts/arnsson_new-york-city-is-about-to-have-its-first-ugcPost-7388165519578804224-0siD?utm_source=share&utm_medium=member_android&rcm=ACoAAArkbggBtdy8LGqE8dTMpLEDYS6h6-t9XZc" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Difference between Profit & Not-for-Profit</div>
+                            <div class="resource-meta">Read what differs Profit from Non-Profit</div>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1fbfKGJj75ZRtBVrSzJqWUPQit9XTu_cM/view?usp=drivesdk" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Capitalism, Economy, Liberation, Identity, Choice</div>
+                            <div class="resource-meta">Women’s bodies and choices have long been politicised terrain used, regulated, and misrepresented to serve broader ideological agendas. Read more..</div>
+                        </div>
+                        <a href="https://www.linkedin.com/posts/reemaaamir_capitalism-economy-liberation-activity-7358576244134756353-eYrn?utm_source=share&utm_medium=member_android&rcm=ACoAAArkbggBtdy8LGqE8dTMpLEDYS6h6-t9XZc" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Gaza, Human Rights</div>
+                            <div class="resource-meta">The ship Mikeno disappeared from trackers...Hours of silence. The world was holding its breath. And now — it has reappeared inside Gaza’s territorial waters, just 9.3 miles offshore. Read more..</div>
+                        </div>
+                        <a href="https://www.linkedin.com/posts/bdelibas_sumudflotilla-gaza-humanrights-activity-7379404319751733248-XrIj?utm_source=share&utm_medium=member_android&rcm=ACoAAArkbggBtdy8LGqE8dTMpLEDYS6h6-t9XZc" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Flotilla Tracker - Global Movement to Gaza</div>
+                            <div class="resource-meta">All 42 boats in the historic Global Sumud Flotilla mission were illegally intercepted between October 1-3, while attempting to break Israel's siege on Gaza. 462 people were kidnapped in international waters. Read more..</div>
+                        </div>
+                        <a href="https://globalsumudflotilla.org/tracker/" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Gaza - the testing ground for weapons.</div>
+                            <div class="resource-meta">Israel's military depends on imports from U.S. firms like Lockheed Martin, Boeing, Raytheon, and European companies like BAE Systems and Rheinmetall. Read more..</div>
+                        </div>
+                        <a href="https://www.linkedin.com/posts/reemaaamir_us-president-donald-trump-told-israels-parliament-activity-7383550369429180416-o_vw?utm_source=share&utm_medium=member_android&rcm=ACoAAArkbggBtdy8LGqE8dTMpLEDYS6h6-t9XZc" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Ibrahim Traore's Speech at UN</div>
+                            <div class="resource-meta">Africa will not kneel - Listen to Captain Ibrahim Traore's Impressive Speech at the United Nations</div>
+                        </div>
+                        <a href="https://www.linkedin.com/posts/hanslak_everyone-should-hear-ibrahim-traore-s-speech-ugcPost-7385999014435012608-2WJB?utm_source=social_share_video_v2&utm_medium=android_app&rcm=ACoAAArkbggBtdy8LGqE8dTMpLEDYS6h6-t9XZc&utm_campaign=copy_link" class="resource-link">Open</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Most Famous Stockbroker on Wall Street</div>
+                            <div class="resource-meta">Interview with the Einstein of Wall Street, Peter Tuchman, the longest-standing trader and stockbroker in the history of the New York Stock Exchange.</div>
+                        </div>
+                        <a href="https://www.linkedin.com/posts/the-school-of-hard-knocks-llc_hes-the-most-famous-stockbroker-on-wall-activity-7386733079631106048-h4Uu?utm_source=share&utm_medium=member_android&rcm=ACoAAArkbggBtdy8LGqE8dTMpLEDYS6h6-t9XZc" class="resource-link">Open</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--light-purple);"><strong>G-Academia</strong> © 2025 All Rights Reserved.</p>
+            <p>Project by <strong>Zainab Usman</strong></p> 
+        </div>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function loadSubject(subject) {
+            const items = document.querySelectorAll('.subject-item');
+            items.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Close sidebar on mobile after selection
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+
+            // In a real implementation, this would load different content for each subject
+            console.log('Loading subject:', subject);
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.menu-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                sidebar.classList.contains('open') && 
+                !sidebar.contains(event.target) && 
+                !toggle.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
