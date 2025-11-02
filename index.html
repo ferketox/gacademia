@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Resource Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #6B46C1;
+            --dark-purple: #553C9A;
+            --light-purple: #E9D8FD;
+            --white: #FFFFFF;
+            --gray: #F7FAFC;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--gray);
+            color: var(--text-dark);
+        }
+
+        /* Header */
+        header {
+            background: var(--purple);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(107, 70, 193, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-left: 50px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: var(--white);
+            padding: 1.5rem 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subject-list {
+            list-style: none;
+        }
+
+        .subject-item {
+            padding: 0.7rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            border-left: 3px solid transparent;
+        }
+
+        .subject-item:hover {
+            background: var(--light-purple);
+            border-left-color: var(--purple);
+            color: var(--dark-purple);
+        }
+
+        .subject-item.active {
+            background: var(--light-purple);
+            border-left-color: var(--purple);
+            color: var(--purple);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .content-section {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: var(--dark-purple);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--purple);
+            margin-top: 1rem;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+        }
+
+        p {
+            line-height: 1.7;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .gpa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .gpa-card {
+            background: linear-gradient(135deg, var(--light-purple) 0%, #F3E8FF 100%);
+            border-radius: 10px;
+            padding: 1.3rem;
+            text-align: center;
+            border: 2px solid var(--purple);
+        }
+
+        .gpa-card h4 {
+            color: var(--purple);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .gpa-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-purple);
+            margin: 0.5rem 0;
+        }
+
+        .gpa-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .grade-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .grade-table th,
+        .grade-table td {
+            padding: 0.9rem;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .grade-table th {
+            background: var(--purple);
+            color: var(--white);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        .grade-table tr:hover {
+            background: var(--light-purple);
+        }
+
+        .highlight-box {
+            background: var(--light-purple);
+            border-left: 4px solid var(--purple);
+            padding: 1rem 1.3rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            color: var(--dark-purple);
+            font-size: 0.95rem;
+        }
+
+        .tip {
+            background: #F0FFF4;
+            border-left: 4px solid #48BB78;
+            padding: 1rem 1.3rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tip strong {
+            color: #22543D;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-purple);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        footer p {
+            color: var(--light-purple);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--light-purple);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.6rem;
+                margin-left: 30px;
+                margin-top: 10px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                transition: left 0.3s;
+                z-index: 99;
+                max-height: calc(100vh - 60px);
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .main-content {
+                padding: 1rem;
+                margin-top: 0;
+            }
+
+            .content-section {
+                padding: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            p, .grade-table, .highlight-box p, .tip {
+                font-size: 0.85rem;
+            }
+
+            .gpa-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .gpa-card {
+                padding: 1rem;
+            }
+
+            .gpa-value {
+                font-size: 1.5rem;
+            }
+
+            .grade-table th,
+            .grade-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            header {
+                padding: 0.8rem 1rem;
+            }
+
+            footer {
+                padding: 1.5rem 1rem;
+            }
+
+            .footer-links {
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+                margin-left: 30px;
+                margin-top: 10px;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
+
+            h3 {
+                font-size: 0.9rem;
+            }
+
+            p, .grade-table, .highlight-box p, .tip {
+                font-size: 0.8rem;
+            }
+
+            .content-section {
+                padding: 1rem;
+            }
+
+            .gpa-card {
+                padding: 0.8rem;
+            }
+
+            .gpa-card h4 {
+                font-size: 0.9rem;
+            }
+
+            .gpa-value {
+                font-size: 1.3rem;
+            }
+
+            .gpa-desc {
+                font-size: 0.75rem;
+            }
+
+            .grade-table th,
+            .grade-table td {
+                padding: 0.5rem 0.4rem;
+                font-size: 0.75rem;
+            }
+
+            .subject-item {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .sidebar-title {
+                font-size: 0.75rem;
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">G-Academia</div>
+            <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-title">Subjects</div>
+            <!--<ul class="subject-list">
+                <li class="subject-item active" onclick="loadSubject('home')">📚 GPA Guide</li>
+                <li class="subject-item" onclick="loadSubject('math')">➗ Mathematics</li>
+                <li class="subject-item" onclick="loadSubject('physics')">⚛️ Physics</li>
+                <li class="subject-item" onclick="loadSubject('chemistry')">🧪 Chemistry</li>
+                <li class="subject-item" onclick="loadSubject('bio')">🧬 Biology</li>
+                <li class="subject-item" onclick="loadSubject('cs')">💻 Computer Science</li>
+                <li class="subject-item" onclick="loadSubject('english')">📖 English</li>
+                <li class="subject-item" onclick="loadSubject('stats')">📊 Statistics</li>
+                <li class="subject-item" onclick="loadSubject('econ')">💰 Economics</li>
+                <li class="subject-item" onclick="loadSubject('psych')">🧠 Psychology</li>
+            </ul>-->
+            <ul class="subject-list">
+                <li class="subject-item active" onclick="loadSubject('home')">
+                    <a href="#" style="text-decoration: none; color: inherit; display: block;">📚 GPA Guide</a></li>
+                <li class="subject-item" onclick="loadSubject('cs')">
+                    <a href="announcements.html" style="text-decoration: none; color: inherit; display: block;">📢 Announcements</a></li>
+                <li class="subject-item" onclick="loadSubject('math')">
+                    <a href="math.html" style="text-decoration: none; color: inherit; display: block;">➗ Mathematics</a></li>
+                <li class="subject-item" onclick="loadSubject('english')">
+                    <a href="english.html" style="text-decoration: none; color: inherit; display: block;">📖 Functional English</a></li>
+                <li class="subject-item" onclick="loadSubject('econ')">
+                    <a href="economics.html" style="text-decoration: none; color: inherit; display: block;">💰 Microeconomics</a></li>
+                <li class="subject-item" onclick="loadSubject('psych')">
+                    <a href="bus.html" style="text-decoration: none; color: inherit; display: block;">📊 Business & Society</a></li>
+                <li class="subject-item" onclick="loadSubject('chemistry')">
+                    <a href="apd.html" style="text-decoration: none; color: inherit; display: block;">👩‍🎓 APD</a></li>
+                <li class="subject-item" onclick="loadSubject('cs')">
+                    <a href="computer.html" style="text-decoration: none; color: inherit; display: block;">💻 Applications of ICT</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-section">
+                <h1>Understanding Your GPA 🎓</h1>
+                <p>Your Grade Point Average (GPA) is one of the most important academic metrics that can shape your future opportunities. Whether you're aiming for grad school, scholarships, or international admissions, understanding how GPA works is crucial.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>How GPA is Calculated</h2>
+                <p>GPA is calculated by assigning a numerical value to each letter grade you receive, then finding the average. Here's the standard 4.0 scale breakdown:</p>
+
+                <table class="grade-table">
+                    <thead>
+                        <tr>
+                            <th>Letter Grade</th>
+                            <th>Percentage</th>
+                            <th>GPA Points</th>
+                            <th>Quality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A+</strong></td>
+                            <td>97-100%</td>
+                            <td>4.0</td>
+                            <td>Outstanding</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A</strong></td>
+                            <td>93-96%</td>
+                            <td>4.0</td>
+                            <td>Excellent</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A-</strong></td>
+                            <td>90-92%</td>
+                            <td>3.7</td>
+                            <td>Very Good</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B+</strong></td>
+                            <td>87-89%</td>
+                            <td>3.3</td>
+                            <td>Good</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B</strong></td>
+                            <td>83-86%</td>
+                            <td>3.0</td>
+                            <td>Above Average</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B-</strong></td>
+                            <td>80-82%</td>
+                            <td>2.7</td>
+                            <td>Satisfactory</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C+</strong></td>
+                            <td>77-79%</td>
+                            <td>2.3</td>
+                            <td>Fair</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C</strong></td>
+                            <td>73-76%</td>
+                            <td>2.0</td>
+                            <td>Adequate</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C-</strong></td>
+                            <td>70-72%</td>
+                            <td>1.7</td>
+                            <td>Below Average</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D</strong></td>
+                            <td>60-69%</td>
+                            <td>1.0</td>
+                            <td>Poor</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F</strong></td>
+                            <td>Below 60%</td>
+                            <td>0.0</td>
+                            <td>Failing</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Step-by-Step Calculation</h3>
+                <div class="highlight-box">
+                    <p><strong>Formula:</strong> GPA = (Total Grade Points) ÷ (Total Credit Hours)</p>
+                </div>
+
+                <p><strong>Example Calculation:</strong></p>
+                <p>Let's say you took 5 courses:</p>
+                <ul style="margin-left: 1.5rem; margin-bottom: 1rem; line-height: 1.8;">
+                    <li>Math (3 credits): A (4.0) → 3 × 4.0 = 12 points</li>
+                    <li>English (3 credits): B+ (3.3) → 3 × 3.3 = 9.9 points</li>
+                    <li>Chemistry (4 credits): A- (3.7) → 4 × 3.7 = 14.8 points</li>
+                    <li>History (3 credits): B (3.0) → 3 × 3.0 = 9 points</li>
+                    <li>PE (1 credit): A (4.0) → 1 × 4.0 = 4 points</li>
+                </ul>
+                <p><strong>Total Points:</strong> 12 + 9.9 + 14.8 + 9 + 4 = 49.7</p>
+                <p><strong>Total Credits:</strong> 3 + 3 + 4 + 3 + 1 = 14</p>
+                <p><strong>GPA:</strong> 49.7 ÷ 14 = <strong>3.55</strong></p>
+            </div>
+
+            <div class="content-section">
+                <h2>GPA Ranges & What They Mean</h2>
+                
+                <div class="gpa-grid">
+                    <div class="gpa-card">
+                        <h4>🏆 Excellent</h4>
+                        <div class="gpa-value">3.7-4.0</div>
+                        <div class="gpa-desc">Dean's List, Honors</div>
+                    </div>
+                    <div class="gpa-card">
+                        <h4>✨ Good</h4>
+                        <div class="gpa-value">3.0-3.6</div>
+                        <div class="gpa-desc">Above Average</div>
+                    </div>
+                    <div class="gpa-card">
+                        <h4>📌 Average</h4>
+                        <div class="gpa-value">2.5-2.9</div>
+                        <div class="gpa-desc">Satisfactory</div>
+                    </div>
+                    <div class="gpa-card">
+                        <h4>⚠️ Below Average</h4>
+                        <div class="gpa-value">2.0-2.4</div>
+                        <div class="gpa-desc">Needs Improvement</div>
+                    </div>
+                </div>
+
+                <h3>What's Considered Good?</h3>
+                <p><strong>3.5+:</strong> Highly competitive for top-tier universities, scholarships, and graduate programs.</p>
+                <p><strong>3.0-3.4:</strong> Solid GPA that opens doors to many good universities and opportunities.</p>
+                <p><strong>2.5-2.9:</strong> Average range. You'll qualify for many programs but may need to compensate with strong test scores or extracurriculars.</p>
+                <p><strong>Below 2.5:</strong> May limit options. Focus on improving and highlighting other strengths.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>GPA for International Admissions</h2>
+                
+                <h3>🇺🇸 United States</h3>
+                <p><strong>Top Universities (Ivy League, MIT, Stanford):</strong> 3.8-4.0 GPA typically required</p>
+                <p><strong>Good State Universities:</strong> 3.3-3.7 GPA competitive</p>
+                <p><strong>Most Colleges:</strong> 2.5-3.2 GPA acceptable</p>
+
+                <h3>🇬🇧 United Kingdom</h3>
+                <p><strong>Oxford, Cambridge:</strong> 3.7+ GPA (equivalent to First Class Honours)</p>
+                <p><strong>Russell Group Universities:</strong> 3.3+ GPA</p>
+                <p><strong>Most Universities:</strong> 2.8+ GPA</p>
+
+                <h3>🇨🇦 Canada</h3>
+                <p><strong>Top Universities (UofT, UBC, McGill):</strong> 3.5+ GPA</p>
+                <p><strong>Most Programs:</strong> 3.0+ GPA</p>
+
+                <h3>🇦🇺 Australia</h3>
+                <p><strong>Group of Eight Universities:</strong> 3.0+ GPA (equivalent to Credit average)</p>
+                <p><strong>Most Universities:</strong> 2.5+ GPA</p>
+
+                <div class="tip">
+                    <p><strong>💡 Pro Tip:</strong> While GPA is important, international admissions also heavily consider standardized tests (SAT, ACT, GRE), essays, recommendation letters, and extracurricular activities. A strong application is holistic!</p>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>How to Improve Your GPA</h2>
+                
+                <div class="highlight-box">
+                    <p><strong>Focus on high-credit courses:</strong> Since credits are weighted, acing a 4-credit class impacts your GPA more than a 1-credit course.</p>
+                </div>
+
+                <p><strong>Consistent effort > cramming:</strong> Regular study habits and attendance make a huge difference.</p>
+                <p><strong>Seek help early:</strong> Don't wait until you're struggling. Use office hours, tutoring, and study groups.</p>
+                <p><strong>Take manageable course loads:</strong> It's better to excel in 4 classes than to struggle with 6.</p>
+                <p><strong>Retake failed courses:</strong> Many universities allow grade replacement for improved scores.</p>
+
+                <div class="tip">
+                    <p><strong>🎯 Reality Check:</strong> Your first semester GPA isn't your final GPA. You have time to improve! Many successful students had rough starts. What matters is the upward trend.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--light-purple);"><strong>G-Academia</strong> © 2025 All Rights Reserved.</p>
+            <p>Project by <strong>Zainab Usman</strong></p> 
+        </div>
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function loadSubject(subject) {
+            const items = document.querySelectorAll('.subject-item');
+            items.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Close sidebar on mobile after selection
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+
+            // In a real implementation, this would load different content
+            //alert('This would navigate to the ' + subject + ' resource page. For now, this is a demo showing the GPA Guide.');
+        }
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.menu-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                sidebar.classList.contains('open') && 
+                !sidebar.contains(event.target) && 
+                !toggle.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>
