@@ -441,6 +441,25 @@
             color: var(--light-purple);
         }
 
+        .red-box{
+            background: linear-gradient(135deg, #FED7D7 0%, #FEB2B2 100%); 
+            border: 2px solid #FC8181; 
+            color: #742A2A; 
+            padding: 1.2rem; 
+            border-radius: 10px; 
+            margin-bottom: 0rem; 
+            box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3); 
+            margin-left: -30px;
+        }
+
+        .red-box h2{
+            color: #742A2A;; margin: 0 0 0.5rem 0; font-size: 1.3rem; display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        .red-box p{
+            margin: 0; font-size: 1rem; line-height: 1.6;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .logo {
@@ -541,6 +560,30 @@
             .footer-links {
                 gap: 1rem;
                 font-size: 0.8rem;
+            }
+
+            .red-box{
+                 box-sizing: border-box;
+                background: linear-gradient(135deg, #FED7D7 0%, #FEB2B2 100%); 
+                border: 2px solid #FC8181; 
+                color: #742A2A; 
+                border-radius: 10px; 
+                margin-bottom: 0rem; 
+                box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3); 
+                margin-left: 0px;
+                padding: 0.5rem 0.7rem; 
+            }
+
+            .red-box .span {
+                font-size: 0.5rem;
+            }
+
+            .red-box h2{
+                color: #742A2A;; margin: 0 0 0.5rem 0; font-size: 0.9rem; display: flex; align-items: center; gap: 0.2rem;
+            }
+
+            .red-box p{
+                margin: 0; font-size: 0.7rem; line-height: 1;
             }
         }
 
@@ -652,6 +695,30 @@
                 font-size: 0.75rem;
                 padding: 0 1rem;
             }
+
+            .red-box{
+                 box-sizing: border-box;
+                background: linear-gradient(135deg, #FED7D7 0%, #FEB2B2 100%); 
+                border: 2px solid #FC8181; 
+                color: #742A2A; 
+                border-radius: 10px; 
+                margin-bottom: 0rem; 
+                box-shadow: 0 4px 15px rgba(245, 101, 101, 0.3); 
+                margin-left: 0px;
+                padding: 0.5rem 0.7rem; 
+            }
+
+            .red-box .span {
+                font-size: 0.5rem;
+            }
+
+            .red-box h2{
+                color: #742A2A;; margin: 0 0 0.5rem 0; font-size: 0.9rem; display: flex; align-items: center; gap: 0.2rem;
+            }
+
+            .red-box p{
+                margin: 0; font-size: 0.7rem; line-height: 1;
+            }
         }
     </style>
 </head>
@@ -718,7 +785,7 @@
             <div class="content-section">
                 <div class="section-header">
                     <span class="section-icon">🗒</span>
-                    <h2>Lecture Notes</h2>
+                    <h2>Lectures</h2>
                 </div>
                 <div class="resource-list">
                     <div class="resource-item">
@@ -763,6 +830,13 @@
                         </div>
                         <a href="https://docs.google.com/document/d/1F9T8c33ch7PfXJATm_hjSCs_Ie9TniKP/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
                     </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Lecture 7 – Divisions of Goods</div>
+                            <div class="resource-meta">Shorts Only</div>
+                        </div>
+                        <a href="https://drive.google.com/file/d/15a-zELg68TP7huCMd3BuVj08F1th3Kj-/view?usp=drivesdk" class="resource-link">📄 PDF</a>
+                    </div>
                 </div>
             </div>
 
@@ -786,29 +860,58 @@
             <div class="content-section">
                 <div class="section-header">
                     <span class="section-icon">🧮</span>
-                    <h2>Extra Resources</h2>
+                    <h2>Lecture Notes</h2>
+                </div>
+                <div class="content-section">
+                    <div class="red-box">
+                        <h2>
+                            <span>🌟</span> Credit
+                        </h2>
+                        <p>All notes have been made & organised by <strong>Faizan Mehboob</strong></p>
+                    </div>
                 </div>
                 <div class="resource-list">
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">10 Principles of Microeconomics</div>
+                            <div class="resource-meta">Economics, Scarcity, Choice, Micro/Macro Economics, Positive & Normative Analysis, Opportunity Cost, 10 Principles</div>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1CrGz4tl230E8J_u-3qURiiTU1MEPP2y_/view?usp=drivesdk" class="resource-link">📄 Read</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Economic Models</div>
+                            <div class="resource-meta">Circular Flow Diagram, Production Possibility Frontier, Shift in Frontier, Absolute Advantage, Comparative Advantage, Competitive Markets, Law of Demand (Long)</div>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1GzV8EKxxxU36kmRrehGXmWhmjtC-hvNO/view?usp=drivesdk" class="resource-link">📄 Read</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Law of Supply</div>
+                            <div class="resource-meta">Law of Supply (Long)</div>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1PXU4VgpccUgNTTLFjoMpJAM-SB9Mek3W/view?usp=drivesdk" class="resource-link">📄 Read</a>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-info">
+                            <div class="resource-title">Elasticity of Demand & Types of Goods</div>
+                            <div class="resource-meta">Types of Elasticity of Demand, Elasticity of Supply, Public Goods, Private Goods, Club Goods, Common Resources, Market Failure</div>
+                        </div>
+                        <a href="https://drive.google.com/file/d/1ukJydJj0eX1ROCSpGCfnvSKU9cP4Ygw3/view?usp=drivesdk" class="resource-link">📄 Read</a>
+                    </div>
                     <div class="resource-item">
                         <div class="resource-info">
                             <div class="resource-title">MCQs</div>
                             <div class="resource-meta">From First Quiz</div>
                         </div>
-                        <a href="https://docs.google.com/document/d/1qwNlIFUi15GTATpsvcS_NdxV7HARPFPt/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 PDF</a>
+                        <a href="https://docs.google.com/document/d/1qwNlIFUi15GTATpsvcS_NdxV7HARPFPt/edit?usp=drivesdk&ouid=102325514473873698973&rtpof=true&sd=true" class="resource-link">📄 Read</a>
                     </div>
                     <div class="resource-item">
                         <div class="resource-info">
                             <div class="resource-title">Problems</div>
                             <div class="resource-meta">From First Quiz</div>
                         </div>
-                        <a href="https://drive.google.com/file/d/1V8Er9qXaH60N6CK4pdtTRaWE5oXW_3OE/view?usp=drivesdk" class="resource-link">📄 PDF</a>
-                    </div>
-                    <div class="resource-item">
-                        <div class="resource-info">
-                            <div class="resource-title">Divisions of Goods</div>
-                            <div class="resource-meta">Private, Public, Club, Common</div>
-                        </div>
-                        <a href="https://drive.google.com/file/d/15a-zELg68TP7huCMd3BuVj08F1th3Kj-/view?usp=drivesdk" class="resource-link">📄 PDF</a>
+                        <a href="https://drive.google.com/file/d/1V8Er9qXaH60N6CK4pdtTRaWE5oXW_3OE/view?usp=drivesdk" class="resource-link">📄 Read</a>
                     </div>
                 </div>
             </div>
@@ -856,5 +959,5 @@
         });
     </script>
 </body>
-
 </html>
+
